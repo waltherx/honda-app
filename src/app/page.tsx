@@ -1,113 +1,114 @@
-import Image from 'next/image'
+"use client"
+import AutoComplete from "@/components/AutoComplete";
+import SearchIcon from "@/components/SearchIcon";
+import { toMoney, toStr } from "@/libs/format";
+import { getAllPlacaFn, getAllPlacas } from "@/services/motoApi";
+import { MotoData } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+
+import dynamic from 'next/dynamic';
+
+const Mapa = dynamic(() => import('@/components/Map'), {
+  ssr: false,
+});
 
 export default function Home() {
+
+  const [val, setVal] = useState<string>("");
+  const [items, setItems] = useState<string[]>([]);
+  const [placas, setPlacas] = useState<string[]>([]);
+
+  const {
+    // isLoading,
+    //isError,
+    //error: errorMoto,
+    data: dataMoto } = useQuery<MotoData, Error>({ queryKey: ['placa', val], queryFn: () => getAllPlacaFn(val) });
+
+  useEffect(() => {
+    async function fetchData() {
+      const placas = await getAllPlacas();
+      const newItems = placas.map((p) => p.placa).sort();
+      setPlacas(newItems);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!val) {
+      setItems(placas);
+      return;
+    }
+    const newItems = placas
+      .filter((p) => p.toLowerCase().includes(val.toLowerCase()))
+      .sort();
+    setItems(newItems);
+  }, [placas, val]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+      <div className="flex">
+        <div className="w-3/4 bg-base-200 rounded-s-lg p-4">
+          <div className="card bg-base-200 w-full">
+            <div className='z-10'>
+              <div className="w-full rounded-lg p-5">
+                <div className="flex">
+                  <div className="flex w-10 items-center justify-center border-r p-5">
+                    <svg viewBox="0 0 20 20" aria-hidden="true" className="pointer-events-none absolute w-5 fill-primary transition">
+                      <path d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z"></path>
+
+                    </svg>
+                  </div>
+                  <AutoComplete items={items} value={val} onChange={setVal} />
+                </div>
+              </div>
+            </div>
+            <div className="map__container card-body z-0" >
+              <Mapa position={[-17.782070, -63.178765]} />
+            </div>
+          </div>
+        </div>
+        <div className="w-1/4 h-screen bg-base-200 rounded-e-lg sticky top-0 p-4">
+          <div className="max-w-xs mx-auto bg-base-200 rounded-lg shadow-md overflow-hidden mt-24">
+            <div className="bg-base-200 px-4 py-2">
+              <h2 className="text-lg font-medium">Informacion Moto</h2>
+            </div>
+            {dataMoto ?
+              <div className="px-4 py-5 sm:p-6">
+                <div className="flex flex-col items-start justify-between mb-6">
+                  <span className="text-sm font-medium text-gray-500">Placa</span>
+                  <span className="text-lg font-medium ">{dataMoto.placa}</span>
+                </div>
+                <div className="flex flex-col items-start justify-between mb-6">
+                  <span className="text-sm font-medium text-gray-500">Modelo</span>
+                  <span className="text-lg font-medium ">{dataMoto.marca + ", " + dataMoto.modelo}</span>
+                </div>
+                <div className="flex flex-row items-start justify-between mb-6">
+                  <div className="flex flex-col items-start">
+                    <span className="text-sm font-medium text-gray-500">Fecha</span>
+                    <span className="text-lg font-medium ">{toStr(dataMoto.fecha_compra)}</span>
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="text-sm font-medium text-gray-500">Precio Compra</span>
+                    <span className="text-lg font-medium ">{toMoney(dataMoto.precio_compra)}</span>
+                  </div>
+                </div>
+                <div className="flex flex-row items-start justify-between">
+                  <div className="flex flex-col items-start">
+                    <span className="text-sm font-medium text-gray-500">Id cliente</span>
+                    <span className="text-lg font-medium ">{dataMoto.client_id}</span>
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="text-sm font-medium text-gray-500">Id Moto</span>
+                    <span className="text-lg font-medium ">{dataMoto.id}</span>
+                  </div>
+                </div>
+              </div>
+              : <div className="w-32 h-32"><SearchIcon loop /></div>}
+          </div>
+
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </>
+  );
 }
