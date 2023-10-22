@@ -4,15 +4,27 @@ import { MotoData } from "@/types";
 import Link from "next/link";
 import { getAllMotos } from "../../services/motoApi";
 import { useQuery } from "@tanstack/react-query";
+import { } from "@/components/Button";
+import { Button } from "@/components/Button";
+import { useEffect, useState } from "react";
+import CreateMotoModal from "@/components/modals/CreateMotoModal";
+import UpdateMotoModal from "@/components/modals/UpdateMotoModal";
 
 
 export default function Page() {
 
-  //const [motos, setMotos] = useState<MotoData[]>([]);
-  const { data: motos, isLoading, isFetching, error } = useQuery<MotoData[]>({
+  const [selectedMoto, setSelectedMoto] = useState<MotoData | null>(null);
+  const [isCreateMotoModalShown, setIsCreateMotoModalShown] = useState(false);
+  const { data: motos, isLoading, error } = useQuery<MotoData[]>({
     queryKey: ["motos"],
     queryFn: getAllMotos,
   });
+
+  useEffect(() => {
+    if (isCreateMotoModalShown === false || selectedMoto === null) {
+        //fetchPizzas();
+    }
+}, [isCreateMotoModalShown, selectedMoto]);
 
   if (error) return <div>error al cargar datos..☠️</div>
   if (isLoading) return <SimpleLoading />
@@ -26,12 +38,16 @@ export default function Page() {
         </ul>
       </div>
       <div className="card bg-base-200 shadow-xl">
+        {isCreateMotoModalShown && <CreateMotoModal onClose={() => setIsCreateMotoModalShown(false)} />}
+        {selectedMoto && <UpdateMotoModal moto={selectedMoto} onClose={() => setSelectedMoto(null)} />}
         <div className="card-body">
           <div className="flex gap-x-8">
             <h2 className="card-title text-center">
               Lista de Motos
             </h2>
-            <Link href={'/add'} className="btn btn-primary">Crear</Link>
+            <Button variant="primary" onClick={() => setIsCreateMotoModalShown(true)}>
+              Crear
+            </Button>
           </div>
           <div className="overflow-x-auto">
             {motos ?
@@ -52,7 +68,7 @@ export default function Page() {
                       </td>
                       <td>{c.marca}</td>
                       <td>{c.modelo}</td>
-                      <td><Link className="btn btn-ghost btn-xs" href={`/motos/${c.id}`}>Ver</Link></td>
+                      <td><a className="btn btn-ghost btn-xs" onClick={() => setSelectedMoto(c)}>Editar</a></td>
                     </tr>
                   ))}
                 </tbody>
@@ -69,7 +85,7 @@ export default function Page() {
             }
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }

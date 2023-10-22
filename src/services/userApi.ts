@@ -1,5 +1,5 @@
 import api from "./api";
-import { UserCreate, UserData } from '../types';
+import { RoleData, UserCreate, UserData } from '../types';
 
 export const getAllUsersFn = async () => {
     const response = await api.get<UserData[]>(`user`);
@@ -29,5 +29,16 @@ export const updateUserFn = async ({
 
 export const deleteUserFn = async (id: number) => {
     const response = await api.delete<UserData>(`user/${id}`);
+    return response.data;
+};
+
+
+export const getAllRolesFn = async () => {
+    const response = await api.get<RoleData[]>(`role`);
+    return response.data;
+};
+
+export const getRoleFn = async (id: string) => {
+    const response = await api.get<RoleData>(`role/${id}`);
     return response.data;
 };

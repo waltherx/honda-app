@@ -12,7 +12,7 @@ export type MotoData = {
     fecha_compra: string;
     precio_compra: number;
     client_id: number;
-    //positions: PositionData[];
+    dispositivo?: DeviceData;
 };
 
 export type MotoCreate = Omit<MotoData, "id">;
@@ -88,3 +88,12 @@ export type LoginResponse = {
     access_token: string;
     refresh_token: string;
 };*/
+
+export type RoleData = {
+    id: number;
+    name: string;
+    role: number;
+    sequence: string,
+    memo: string,
+    status: number,
+}

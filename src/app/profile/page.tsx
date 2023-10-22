@@ -3,11 +3,10 @@ import { SimpleLoading } from "@/components/SimpleLoading";
 import { toStr } from "@/libs/format";
 import { getUserInfo } from "@/libs/localStorage";
 import { perfilFn } from "@/services/authApi";
-import { MotoData, UserData } from "@/types";
+import { UserData } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 
 export default function Page() {
 

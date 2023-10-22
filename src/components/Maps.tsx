@@ -20,21 +20,19 @@ interface mapProps {
     positions: PositionData[];
 }
 
-
 export function Maps({ positions }: mapProps) {
     return (
         <div className="map__container card-body z-0" >
             <MapContainer
                 center={[-17.782070, -63.178765]}
                 zoom={13}
-                scrollWheelZoom={false}
-
+                scrollWheelZoom={true}
+                className={`rounded-lg`}
             >
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-
 
                 {positions && positions.map(position => (
                     <Marker
