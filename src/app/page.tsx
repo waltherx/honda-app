@@ -6,6 +6,7 @@ import { getAllPlacaFn, getAllPlacas } from "@/services/motoApi";
 import { MotoData } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import dynamic from 'next/dynamic';
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Mapa = dynamic(() => import('@/app/devices/positions/[id]/Positions'), {
@@ -90,7 +91,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col items-start justify-between mb-3">
                   <span className="text-sm font-medium text-gray-500">Serial Dispositivo</span>
-                  <span className="text-lg font-medium ">{dataMoto.dispositivo?.serial}</span>
+                  <div className="tooltip" data-tip="Ver dispositivo"><Link className="btn-md btn-ghost text-lg font-medium rounded-xl" href={`/devices/positions/${dataMoto.dispositivo?.id}`}>{dataMoto.dispositivo?.serial}</Link></div>
                 </div>
                 <div className="flex flex-row items-start justify-between mb-3">
                   <div className="flex flex-col items-start">

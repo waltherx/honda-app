@@ -12,8 +12,8 @@ export const getPositionFn = async (id: string) => {
 };
 
 export const getPositionLastFn = async (id: string) => {
-    const response = await api.get<PositionData>(`position/last/${id}`);
-    return response.data;
+    const response = await api.get<PositionData[]>(`position/last/${id}`);
+    return response.data[0];
 };
 
 export const getPositionLimitFn = async (id: string, limit: string) => {

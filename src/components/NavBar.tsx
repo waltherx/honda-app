@@ -5,14 +5,23 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { themeChange } from "theme-change";
 import { LoginModal } from '@/modals/LoginModal';
+import { clearTokens } from '@/libs/localStorage';
+import { useRouter } from 'next/navigation';
 
 
 export const NavBar = () => {
-    const [isLoginModalShown, setIsLoginModalShown] = useState(false);
+
+    const router = useRouter();
 
     useEffect(() => {
         themeChange(false);
     }, []);
+
+    const logOut = () => {
+        clearTokens();
+        router.push("/auth/login");
+    }
+
     return (
         <div className="navbar bg-base-100 z-20">
             <div className="navbar-start">
@@ -92,10 +101,7 @@ export const NavBar = () => {
                     <option value="honda">Claro</option>
                     <option value="dark">Oscuro</option>
                 </select>
-                {isLoginModalShown && <LoginModal isDashboard={false} onClose={() => setIsLoginModalShown(false)} />}
-                <a className="btn btn-sm btn-primary mx-4 px-5" onClick={() => setIsLoginModalShown(true)}>
-                    Login
-                </a>
+
                 <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
@@ -109,7 +115,7 @@ export const NavBar = () => {
                             </Link>
                         </li>
                         <li><a>Configuracion</a></li>
-                        <li><a href='/'>Salir</a></li>
+                        <li><a onClick={logOut} >Salir</a></li>
                     </ul>
                 </div>
             </div>

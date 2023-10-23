@@ -13,10 +13,15 @@ const Mapa = dynamic(() => import('@/app/devices/positions/[id]/Positions'), {
     ssr: false,
 });
 
+const MapaLast = dynamic(() => import('@/components/MapLast'), {
+    ssr: false,
+});
+
 const Page = ({ params, }: {
     params: { id: string };
 }) => {
     const [deviceId, setDeviceId] = useState<string>(params.id);
+    const [lastPosition, setLastPosition] = useState<boolean>(true);
 
     const {
         isLoading: isLoadingDevice,
@@ -26,6 +31,10 @@ const Page = ({ params, }: {
 
     if (isLoadingDevice) return <SimpleLoading />;
     if (errorDevice) return <div>error al cargar datos..☠️</div>;
+
+    const checkHandler = () => {
+        setLastPosition(!lastPosition)
+    }
 
     return (
         <>
@@ -39,9 +48,25 @@ const Page = ({ params, }: {
                         </ul>
                     </div>
                     <div>
-                        <div className="card lg:card-side bg-base-100 shadow-xl">
+
+                        <div className="card lg:card-side bg-base-200 shadow-xl">
+
                             <div className="card-body w-full">
-                                <Mapa device_id={deviceId} />
+                                <div className="form-control max-w-max ">
+                                    <label className="label cursor-pointer">
+                                        <span className="label-text">Ultima ubicacion :</span>
+                                        <input
+                                            type="checkbox"
+                                            className="checkbox checkbox-primary"
+                                            checked={lastPosition}
+                                            onChange={checkHandler}
+                                        />
+                                    </label>
+                                </div>
+                                {lastPosition ?
+                                    <MapaLast device_id={deviceId} />
+                                    : <Mapa device_id={deviceId} />
+                                }
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,10 @@
+"use client"
 import { NavBar } from '@/components/NavBar';
 import { Poppins } from 'next/font/google';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 import Providers from './providers';
+import { getYear } from 'date-fns';
 
 export const poppins = Poppins({
   weight: ['400', '500', '700'],
@@ -47,7 +49,7 @@ export default function RootLayout({
             </div>
             <footer className="footer footer-center p-4 bg-base-100 text-base-content">
               <div>
-                <p>Copyright © 2023 - JWP</p>
+                <p>Copyright © {getYear(new Date())} - JWP</p>
               </div>
             </footer>
           </Providers>
