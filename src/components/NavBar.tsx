@@ -8,7 +8,6 @@ import { LoginModal } from '@/modals/LoginModal';
 import { clearTokens } from '@/libs/localStorage';
 import { useRouter } from 'next/navigation';
 
-
 export const NavBar = () => {
 
     const router = useRouter();
@@ -80,8 +79,6 @@ export const NavBar = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                                 </svg>
-
-
                                 Usuarios</Link>
                         </li>
                     </ul>
@@ -90,11 +87,11 @@ export const NavBar = () => {
             <div className="navbar-center">
                 <Link className="btn btn-sm btn-ghost normal-case text-xl" href="/">
                     <Image src="/honda.png" alt="logo" width={30} height={30} />
-                    Monitoreo Motos
+                    Monitoreo
                 </Link>
             </div>
             <div className="navbar-end">
-                <select className="select  select-sm " data-choose-theme>
+                <select className="select select-sm w-20" data-choose-theme>
                     <option disabled value="">
                         Elige un Tema
                     </option>

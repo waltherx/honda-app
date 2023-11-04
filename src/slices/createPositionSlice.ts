@@ -11,6 +11,7 @@ export interface PositionSlice {
 
 export const createPositionSlice: StateCreator<PositionSlice> = (set, get) => ({
     positions: [],
+    amount: 0,
     addToPositions: (position: PositionData) => {
         const positions = get().positions;
         set({ positions: [...positions, position] });

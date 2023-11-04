@@ -3,36 +3,36 @@ import { Maps } from "@/components/Maps";
 import { SimpleLoading } from "@/components/SimpleLoading";
 import { getPositionLimitFn } from "@/services/positionApi";
 import { PositionData } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 interface Props {
     device_id: string;
+    amount?: string;
+    changeAmount?: (amount: string) => void;
 }
 
-const Positions = ({ device_id }: Props) => {
+const Positions = ({ device_id, amount = "5" }: Props) => {
 
     const [deviceId, setDeviceId] = useState<string>(device_id);
-    const [positions, setPositions] = useState<PositionData[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false);
+    const [amountPosition, setAmountPosition] = useState<string>(amount);
 
-    useEffect(() => {
-        setLoading(true);
-        getPositionLimitFn(deviceId, "5").then((data) => {
-            setPositions(data);
-            setLoading(false);
-        }).catch(() => {
-            setError(true);
-        });
+    const {
+        isLoading,
+        isError,
+        data: positions
+    } = useQuery<PositionData[], Error>({ queryKey: ["positionss", deviceId, amountPosition], queryFn: () => getPositionLimitFn(deviceId, amountPosition) });
 
-    }, [deviceId]);
-
-    if (error) return <span>Algo salio mal</span>
-    if (loading) return <SimpleLoading />
+    if (isError) return <span>Algo salio mal</span>
+    if (isLoading) return <SimpleLoading />
 
     return (
         <div>
-            <Maps positions={positions} />
+            {positions ?
+                <Maps positions={positions} />
+                :
+                <div>☠</div>
+            }
         </div>
     );
 }

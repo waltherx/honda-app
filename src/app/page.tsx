@@ -51,8 +51,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex">
-        <div className="w-3/4 bg-base-200 rounded-s-lg p-4">
+      <div className="grid-cols-2 md:grid-cols-2 sm:grid-cols-1 ">
+        <div className="w-3/4 bg-base-200 rounded-s-lg p-4 sm:w-full">
           <div className="card bg-base-200 w-full">
             <div className='z-10'>
               <div className="w-full rounded-lg p-5">
@@ -74,7 +74,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="w-1/4 h-screen bg-base-200 rounded-e-lg sticky top-0 p-2">
+        <div className="w-1/4 h-screen bg-base-200 rounded-e-lg sticky top-0 p-2 sm:w-3/4 sm:w-full">
           <div className="max-w-xs mx-auto bg-base-200 rounded-lg shadow-md overflow-hidden mt-24">
             <div className="bg-base-200 px-4 py-2">
               <h2 className="text-lg font-medium">Informacion Moto </h2>

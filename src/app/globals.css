@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .mapa {
-    height: 80vh;
+    height: 100vh;
 }
 
 .leaflet-container {

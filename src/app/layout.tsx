@@ -40,9 +40,6 @@ export default function RootLayout({
               <div className="flex flex-col">
                 <div className="devider py-2" />
                 <div className="gird">
-                </div>
-                <div className="devider py-2" />
-                <div className="gird">
                   {children}
                 </div>
               </div>

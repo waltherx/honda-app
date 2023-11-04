@@ -42,7 +42,7 @@ const MapLast = ({ device_id }: Props) => {
     if (isLoading) return <Loader />
 
     return (
-        <div className="map__container card-body z-0" >
+        <div className="map__container z-0" >
             {position ?
                 <MapContainer
                     center={[position.latitude, position.longitude]}

@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
-//import Positio
 import dynamic from 'next/dynamic';
 
 const Mapa = dynamic(() => import('@/app/devices/positions/[id]/Positions'), {
@@ -21,6 +20,7 @@ const Page = ({ params, }: {
     params: { id: string };
 }) => {
     const [deviceId, setDeviceId] = useState<string>(params.id);
+    const [amount, setAmount] = useState<string>("5");
     const [lastPosition, setLastPosition] = useState<boolean>(true);
 
     const {
@@ -36,6 +36,11 @@ const Page = ({ params, }: {
         setLastPosition(!lastPosition)
     }
 
+    const amountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.value);
+        setAmount(event.target.value);
+    }
+
     return (
         <>
             {dataDevice ?
@@ -48,30 +53,46 @@ const Page = ({ params, }: {
                         </ul>
                     </div>
                     <div>
-
-                        <div className="card lg:card-side bg-base-200 shadow-xl">
+                        <div className="card bg-base-200 shadow-xl">
 
                             <div className="card-body w-full">
-                                <div className="form-control max-w-max ">
-                                    <label className="label cursor-pointer">
-                                        <span className="label-text">Ultima ubicacion :</span>
-                                        <input
-                                            type="checkbox"
-                                            className="checkbox checkbox-primary"
-                                            checked={lastPosition}
-                                            onChange={checkHandler}
-                                        />
-                                    </label>
+                                <div className="flex">
+                                    <div className="flex-initial form-control w-32">
+                                        <label className="label cursor-pointer">
+                                            <span className="font-bold label-text text-xs">Ultima ubicacion :</span>
+                                            <input
+                                                type="checkbox"
+                                                className="checkbox checkbox-primary checkbox-sm"
+                                                checked={lastPosition}
+                                                onChange={checkHandler}
+                                            />
+                                        </label>
+                                    </div>
+                                    <div className="flex-initial form-control W-32 ">
+                                        <label className="label cursor-pointer">
+                                            <span className="font-bold label-text text-xs">Cantidad de ubicaciones : {amount} </span>
+                                            <input
+                                                type="range"
+                                                min={5}
+                                                max={35}
+                                                step={5}
+                                                defaultValue={amount}
+                                                onChange={amountChange}
+                                                className="range range-primary range-xs"
+                                            />
+                                            
+                                        </label>
+                                    </div>
                                 </div>
                                 {lastPosition ?
                                     <MapaLast device_id={deviceId} />
-                                    : <Mapa device_id={deviceId} />
+                                    : <Mapa device_id={deviceId} amount={amount} />
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
-                : <p><Skeleton />Cargando...😶‍🌫️</p>
+                : <p><Skeleton />Cargando...😫</p>
             }
         </>
     );
