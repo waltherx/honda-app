@@ -3,7 +3,7 @@ import { SimpleLoading } from "@/components/SimpleLoading";
 import { MotoData } from "@/types";
 import Link from "next/link";
 import { getAllMotos } from "../../services/motoApi";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import { } from "@/components/Button";
 import { Button } from "@/components/Button";
 import { useEffect, useState } from "react";

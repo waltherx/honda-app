@@ -15,7 +15,7 @@ import { Title } from '../components/Title';
 import { Toast } from '../components/Toast';
 
 import { useStore } from '@/store'
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from 'react-query';
 import { login } from '@/services/authApi';
 import { getUserInfo, setAccessToken } from '@/libs/localStorage';
 

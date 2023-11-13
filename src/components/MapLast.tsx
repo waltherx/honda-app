@@ -1,5 +1,5 @@
 import { toStr } from "@/libs/format";
-import { hashQueryKey, useQuery } from "@tanstack/react-query";
+import { hashQueryKey, useQuery } from "react-query";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { PositionData } from '@/types'
 import { useState } from "react";

@@ -3,7 +3,7 @@ import { Maps } from "@/components/Maps";
 import { SimpleLoading } from "@/components/SimpleLoading";
 import { getPositionLimitFn } from "@/services/positionApi";
 import { PositionData } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
 
 interface Props {

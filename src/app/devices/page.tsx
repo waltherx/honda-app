@@ -2,7 +2,7 @@
 import { SimpleLoading } from "@/components/SimpleLoading";
 import { getAllDevicesFn } from "@/services/deviceApi";
 import { DeviceData } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import Link from "next/link";
 
 export default function Page() {

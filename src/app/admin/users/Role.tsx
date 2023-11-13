@@ -1,7 +1,7 @@
 "use client"
 
 import { getRoleFn } from "@/services/userApi";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { RoleData } from "@/types"

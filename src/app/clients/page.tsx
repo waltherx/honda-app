@@ -2,7 +2,7 @@
 import { SimpleLoading } from "@/components/SimpleLoading";
 import { getAllClientsFn } from "@/services/clientApi";
 import { ClientData } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import Link from "next/link";
 
 export default function Page() {

@@ -2,7 +2,7 @@
 import { SimpleLoading } from "@/components/SimpleLoading";
 import { getDeviceFn } from "@/services/deviceApi";
 import { DeviceData } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import Link from "next/link";
 import QRCode from 'react-qr-code';
 
