@@ -1,12 +1,12 @@
 "use client";
 import { SimpleLoading } from "@/components/SimpleLoading";
 import { getDeviceFn } from "@/services/deviceApi";
-import { DeviceData, PositionData } from "@/types";
-import { useQuery } from "react-query";
-import Link from "next/link";
-import { useState } from "react";
-import Skeleton from "react-loading-skeleton";
+import { DeviceData } from "@/types";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import { useQuery } from "react-query";
 
 const Mapa = dynamic(() => import("@/app/devices/positions/[id]/Positions"), {
   ssr: false,
@@ -23,13 +23,16 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   const {
     isLoading: isLoadingDevice,
-    //isError,
     error: errorDevice,
     data: dataDevice,
   } = useQuery<DeviceData, Error>({
     queryKey: ["device", deviceId],
     queryFn: () => getDeviceFn(deviceId + ""),
   });
+
+  useEffect(() => {
+    setAmount(amount);
+  }, [amount]);
 
   if (isLoadingDevice) return <SimpleLoading />;
   if (errorDevice) return <div>error al cargar datos..☠️</div>;
@@ -41,6 +44,10 @@ const Page = ({ params }: { params: { id: string } }) => {
   const amountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
     setAmount(event.target.value);
+  };
+
+  const amountHandle = () => {
+    console.log("perro");
   };
 
   return (
@@ -61,8 +68,8 @@ const Page = ({ params }: { params: { id: string } }) => {
           <div>
             <div className="card bg-base-200 shadow-xl">
               <div className="card-body w-full">
-                <div className="flex">
-                  <div className="flex-initial form-control w-32">
+                <div className="inline-flex">
+                  <div className=" form-control w-32">
                     <label className="label cursor-pointer">
                       <span className="font-bold label-text text-xs">
                         Ultima ubicacion :
@@ -75,7 +82,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                       />
                     </label>
                   </div>
-                  <div className="flex-initial form-control W-32 ">
+                  <div className=" inline-flex  w-auto ">
                     <label className="label cursor-pointer">
                       <span className="font-bold label-text text-xs">
                         Cantidad de ubicaciones : {amount}{" "}
@@ -97,7 +104,11 @@ const Page = ({ params }: { params: { id: string } }) => {
                     {lastPosition ? (
                       <MapaLast device_id={deviceId} />
                     ) : (
-                      <Mapa device_id={deviceId} amount={amount} />
+                      <Mapa
+                        device_id={deviceId}
+                        amount={amount}
+                        changeAmount={amountHandle}
+                      />
                     )}
                   </div>
                 </div>

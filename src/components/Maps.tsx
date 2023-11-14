@@ -63,7 +63,7 @@ export function Maps({ positions }: mapProps) {
           >
             <Tooltip direction="top" opacity={1} permanent>
               <span className="text-xs shadow-sm border-spacing-3 p-1">
-                Inicio
+                Fin
               </span>
             </Tooltip>
           </Marker>
@@ -101,7 +101,7 @@ export function Maps({ positions }: mapProps) {
           >
             <Tooltip direction="top" opacity={1} permanent>
               <span className="text-xs shadow-sm border-spacing-3 p-1">
-                Fin
+                Inicio
               </span>
             </Tooltip>
           </Marker>
