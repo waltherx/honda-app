@@ -42,18 +42,16 @@ const Page = () => {
       localStorage.setItem("User", JSON.stringify(getUserInfo()));
       setUser(getUserInfo() ?? null);
       reset();
-      toast(<Toast text={"Bienvenido" + user?.realname} />);
+      toast(<Toast text={"Bienvenido 🤗"} />);
       router.push("/");
     },
     onError: (data: LoginResponse) => {
-      console.log(data);
       toast(<Toast text={getErrorMessage(data)} />);
     },
   });
 
-  const onSubmit = handleSubmit(async (data:LoginPayload) => {
+  const onSubmit = handleSubmit(async (data: LoginPayload) => {
     ///const { username, password } = data;
-    console.log(data);
     try {
       mutation.mutate(data);
     } catch (error) {

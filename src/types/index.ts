@@ -36,7 +36,11 @@ export type ClientCreate = {
 export type DeviceData = {
     id: number;
     serial: string;
-    moto_id: number;
+    chipgsm: string;
+    megas: Date;
+    estado: string;
+    created_at: Date;
+    update_at: Date;
 }
 
 export type DeviceCreate = Omit<DeviceData, "id">;
@@ -83,6 +87,29 @@ export type LoginResponse = {
     user: User;
     token: string;
 }
+
+export type SucrusalData = {
+    id: string;
+    nombre: string;
+    direccion: string;
+    latitude: number;
+    longitude: number;
+}
+
+export type SucrusalCreate = Omit<SucrusalData, "id">;
+
+
+export type AlarmaData = {
+    id: string;
+    nombre: string;
+    devices: string;
+    created_at: string;
+    update_at: string;
+    estado: string;
+    typealarma_id: string;
+}
+
+export type AlarmaCreate = Omit<AlarmaData, "id">;
 
 /*export type LoginResponse = {
     access_token: string;

@@ -46,7 +46,7 @@ export default function Page() {
                         <Link href={`/devices/${c.id}`}>{c.id}</Link>
                       </td>
                       <td>{c.serial}</td>
-                      <td>{c.moto_id ? c.moto_id : <div className="badge badge-primary">Sin asignar</div>}</td>
+                      <td>{c.chipgsm }</td>
                       <td><Link className="btn btn-ghost btn-xs" href={`/devices/${c.id}`}>Ver</Link></td>
                       <td><Link className="btn btn-ghost btn-xs" href={`/devices/positions/${c.id}`}>Ubicaciones</Link></td>
                     </tr>

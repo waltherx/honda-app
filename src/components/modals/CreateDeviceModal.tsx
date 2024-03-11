@@ -13,7 +13,7 @@ type Props = {
   onClose?: () => void;
 };
 
-const CreateMotoModal = ({ onClose }: Props) => {
+const CreateDeviceModal = ({ onClose }: Props) => {
   const [error, setError] = useState("");
 
   const schema = z.object({
@@ -53,7 +53,7 @@ const CreateMotoModal = ({ onClose }: Props) => {
 
   return (
     <Modal onClose={onClose} addBackground={true}>
-      <Title title="Registrar moto" description="Registar una nueva moto." />
+      <Title title="Registrar Dispositivo" description="Registar una nuevo dispositivo." />
       <form onSubmit={onSubmit}>
         <div className="mt-4">
           <div className="flex">
@@ -113,4 +113,4 @@ const CreateMotoModal = ({ onClose }: Props) => {
   );
 };
 
-export default CreateMotoModal;
+export default CreateDeviceModal;
