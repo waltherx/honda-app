@@ -27,7 +27,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     data: dataDevice,
   } = useQuery<DeviceData, Error>({
     queryKey: ["device", deviceId],
-    queryFn: () => getDeviceFn(deviceId + ""),
+    queryFn: () => getDeviceFn(+deviceId),
   });
 
   useEffect(() => {
