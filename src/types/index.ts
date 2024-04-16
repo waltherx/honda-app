@@ -70,6 +70,8 @@ export type UserData = {
     role_id: number;
 }
 
+export type AuthStatus = "authorized" | "unauthorized" | "pending";
+
 export type UserCreate = Omit<UserData, "id" | "email" | "phone" | "token" | "created_at" | "update_at">;
 
 export type LoginPayload = {
@@ -77,7 +79,7 @@ export type LoginPayload = {
     password: string;
 };
 
-type User = {
+export type User = {
     id: number;
     username: string;
     role: number;

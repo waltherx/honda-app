@@ -1,20 +1,12 @@
-"use client"
-import { NavBar } from '@/components/NavBar';
-import { Poppins } from 'next/font/google';
+import { poppins } from '@/config/fonts';
+import { Metadata } from 'next';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 import Providers from './providers';
-import { getYear } from 'date-fns';
 
-export const poppins = Poppins({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-poppins',
-});
-
-/*export const metadata: Metadata = {
-  title: 'Honda App',
+/*
+export const meta: Metadata = {
+  title: 'Vian motos',
   description: 'Monitoreo de motos',
 }*/
 
@@ -31,26 +23,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/honda.png" sizes="any" />
       </head>
-      <body >
-
-        <div className="flex flex-col h-screen justify-between">
-          <Providers>
-            <NavBar />
-            <div className="mb-auto px-4">
-              <div className="flex flex-col">
-                <div className="devider py-2" />
-                <div className="gird">
-                  {children}
-                </div>
-              </div>
-            </div>
-            <footer className="footer footer-center p-4 bg-base-100 text-base-content">
-              <div>
-                <p>Copyright © {getYear(new Date())} - JWP</p>
-              </div>
-            </footer>
-          </Providers>
-        </div>
+      <body className={poppins.className} >
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )

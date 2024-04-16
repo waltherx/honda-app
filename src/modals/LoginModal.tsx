@@ -14,7 +14,7 @@ import { Modal } from '../components/Modal';
 import { Title } from '../components/Title';
 import { Toast } from '../components/Toast';
 
-import { useStore } from '@/store'
+import { useStore } from '@/stores/positions/positions.store'
 import { useMutation } from 'react-query';
 import { login } from '@/services/authApi';
 import { getUserInfo, setAccessToken } from '@/libs/localStorage';

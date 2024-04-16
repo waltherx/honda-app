@@ -1,5 +1,5 @@
+import { AlarmaCreate, AlarmaData } from '@/types';
 import api from './api';
-import { AlarmaData, AlarmaCreate } from '@/types';
 
 export const getAllAlarmasFn = async () => {
     const response = await api.get<AlarmaData[]>(`alarmas`);

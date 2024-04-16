@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export const metadata: Metadata = {
-    title: '404 Not Found',
+  title: '404 Not Found',
 };
 
 export default function NotFound() {
-    const router = useRouter();
+  const router = useRouter();
   return (
     <>
       <div className="w-full p-4">

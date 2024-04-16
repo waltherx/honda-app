@@ -1,15 +1,22 @@
 "use client";
 
 import { clearTokens, getUserInfo } from "@/libs/localStorage";
+import { useUIStore } from "@/stores/ui/ui-store";
 import { UserData } from "@/types";
 import Avatar from "boring-avatars";
+import { lutimes } from "fs";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { themeChange } from "theme-change";
+import LeftMenu from "./LeftMenu";
 
 export const NavBar = () => {
+
+  const isOpenMenu = useUIStore(state => state.isOpenMenu);
+  const closeMenu = useUIStore(staet => staet.closeSideMenu);
+
   const router = useRouter();
   const [perfil, setPerfil] = useState<UserData>();
   useEffect(() => {
@@ -26,7 +33,7 @@ export const NavBar = () => {
     <div className="navbar bg-base-100 z-20">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost btn-circle">
+          <label tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -42,10 +49,14 @@ export const NavBar = () => {
               />
             </svg>
           </label>
+
+
           <ul
+
             tabIndex={2}
             className="menu menu-xs dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-56"
           >
+
             <li>
               <Link href="/">
                 <svg
@@ -179,7 +190,10 @@ export const NavBar = () => {
                 Usuarios
               </Link>
             </li>
+
           </ul>
+
+
         </div>
       </div>
       <div className="navbar-center">
@@ -189,13 +203,20 @@ export const NavBar = () => {
         </Link>
       </div>
       <div className="navbar-end">
-        <select className="select select-sm w-20" data-choose-theme>
+        <select className="select select-bordered select-sm w-20 m-2" data-choose-theme>
           <option disabled value="">
             Elige un Tema
           </option>
           <option value="honda">Claro</option>
           <option value="dark">Oscuro</option>
         </select>
+
+        <button className="btn btn-ghost btn-circle">
+          <div className="indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+            <span className="badge badge-xs badge-primary indicator-item"></span>
+          </div>
+        </button>
 
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">

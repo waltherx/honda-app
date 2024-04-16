@@ -11,6 +11,11 @@ export const getPositionFn = async (id: string) => {
     return response.data;
 };
 
+export const getPositionDeviceAllFn = async (id: string) => {
+    const response = await api.get<PositionData[]>(`position/moto/${id}`);
+    return response.data.reverse();
+};
+
 export const getPositionLastFn = async (id: string) => {
     const response = await api.get<PositionData[]>(`position/last/${id}`);
     return response.data[0];

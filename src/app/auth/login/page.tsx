@@ -1,24 +1,26 @@
-"use client";
-
+"use client"
 import { Button } from "@/components/Button";
 import { Error } from "@/components/Error";
 import { Input } from "@/components/Input";
 import { Toast } from "@/components/Toast";
-import { getErrorMessage } from "@/libs/errorMessage";
 import { getUserInfo, setAccessToken } from "@/libs/localStorage";
-import { login } from "@/services/authApi";
-import { useStore } from "@/store";
+import { login } from "@/services";
+import { useAuthStore } from "@/stores/auth/auth.store";
+import { useStore } from "@/stores/positions/positions.store";
 import { LoginPayload, LoginResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import * as z from "zod";
 
 const Page = () => {
   const { user, setUser } = useStore();
+
+  const loginUser = useAuthStore(state => state.loginUser)
+
   const router = useRouter();
 
   const schema = z.object({
@@ -45,29 +47,28 @@ const Page = () => {
       toast(<Toast text={"Bienvenido 🤗"} />);
       router.push("/");
     },
-    onError: (data: LoginResponse) => {
-      toast(<Toast text={getErrorMessage(data)} />);
+    onError: (data) => {
+      toast(<Toast text={"Credenciales no validos 😟"} />);
     },
   });
 
   const onSubmit = handleSubmit(async (data: LoginPayload) => {
-    ///const { username, password } = data;
     try {
+      const { username, password } = data;
       mutation.mutate(data);
+      loginUser(username, password)
     } catch (error) {
-      console.log(error);
-      alert("User created failed");
-      alert(error);
+      console.error(error);
     }
   });
 
   return (
     <>
-      <div className="card w-full bg-base-200 shadow-xl">
+      <div className="card bg-base-200 shadow-xl">
         <div className="card-body items-center text-center">
-          <Image src="/honda.png" alt="honda" width={17} height={14} />
+          <Image src="/honda.png" alt="honda" width={30} height={30} />
           <div className="devider py-1"></div>
-          <h2 className="card-title">Inicia sesión</h2>
+          <h2 className="card-title">Inicia Sesión</h2>
           <div className="card-actions">
             <form
               className="grid grid-flow-row auto-rows-max"
