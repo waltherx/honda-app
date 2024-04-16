@@ -65,7 +65,7 @@ const MapHome = ({ moto, position }: Props) => {
                                             </div>
                                             <div className="font-semibold">Placa: </div>
                                             <div>{moto.modelo}</div>
-                                            <div> {moto.marca}</div>
+
                                             <div>{toMoney(moto.precio_compra)}</div>
                                             <div>{toStr(moto.fecha_compra)}</div>
                                         </div>
