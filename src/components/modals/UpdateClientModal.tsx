@@ -3,39 +3,38 @@ import { Error } from "@/components/Error";
 import { Input } from "@/components/Input";
 import { Modal } from "@/components/Modal";
 import { Title } from "@/components/Title";
-import { deviceSchema } from "@/schemas";
-import { DeviceData } from "@/types";
+import { clientShema } from "@/schemas";
+import { ClientData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { z } from "zod";
+import * as z from "zod";
 
 type Props = {
-  device: DeviceData;
+  cliente: ClientData;
   onClose?: () => void;
 };
 
-const UpadateDeviceModel = ({ device, onClose }: Props) => {
+const UpadateClientModel = ({ cliente, onClose }: Props) => {
   const [error, setError] = useState("");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.TypeOf<typeof deviceSchema>>({
-    resolver: zodResolver(deviceSchema),
+  } = useForm<z.TypeOf<typeof clientShema>>({
+    resolver: zodResolver(clientShema),
     defaultValues: {
-      serial: device.serial,
-      chipgsm: device.chipgsm,
-      estado: device.estado,
-      megas_fin: device.megas,
+      ci: cliente.ci,
+      fullname: cliente.fullname,
+      address: cliente.address,
+      phone: cliente.phone,
     },
   });
 
-  const onSubmit = handleSubmit(
-    async ({ serial, chipgsm, estado, megas_fin }) => {
-      /*   const response = await updateClienteFn(pizza.id, name, ingredients, {
+  const onSubmit = handleSubmit(async ({ ci, fullname, address, phone }) => {
+    /*   const response = await updateClienteFn(pizza.id, name, ingredients, {
                small: +smallPrice,
                medium: +mediumPrice,
                large: +largePrice,
@@ -50,8 +49,7 @@ const UpadateDeviceModel = ({ device, onClose }: Props) => {
            } else {
                setError(response.message);
            }*/
-    }
-  );
+  });
 
   return (
     <Modal onClose={onClose} addBackground={true}>
@@ -60,13 +58,13 @@ const UpadateDeviceModel = ({ device, onClose }: Props) => {
         <div className="mt-4">
           <div className="flex">
             <div className="w-full">
-              <Input placeholder="Placa" {...register("serial")} />
-              {errors.serial?.message && <Error>{errors.serial.message}</Error>}
+              <Input placeholder="Placa" {...register("ci")} />
+              {errors.ci?.message && <Error>{errors.ci.message}</Error>}
             </div>
             <div className="w-full ml-2">
-              <Input placeholder="Marca" {...register("chipgsm")} />
-              {errors.chipgsm?.message && (
-                <Error>{errors.chipgsm.message}</Error>
+              <Input placeholder="Marca" {...register("fullname")} />
+              {errors.fullname?.message && (
+                <Error>{errors.fullname.message}</Error>
               )}
             </div>
           </div>
@@ -74,14 +72,14 @@ const UpadateDeviceModel = ({ device, onClose }: Props) => {
         <div className="mt-2">
           <div className="flex">
             <div className="w-full">
-              <Input placeholder="Modelo" {...register("estado")} />
-              {errors.estado?.message && <Error>{errors.estado.message}</Error>}
+              <Input placeholder="Modelo" {...register("address")} />
+              {errors.address?.message && (
+                <Error>{errors.address.message}</Error>
+              )}
             </div>
             <div className="w-full ml-2">
-              <Input placeholder="Año" {...register("megas_fin")} />
-              {errors.megas_fin?.message && (
-                <Error>{errors.megas_fin.message}</Error>
-              )}
+              <Input placeholder="Año" {...register("phone")} />
+              {errors.phone?.message && <Error>{errors.phone.message}</Error>}
             </div>
           </div>
         </div>
@@ -101,4 +99,4 @@ const UpadateDeviceModel = ({ device, onClose }: Props) => {
     </Modal>
   );
 };
-export default UpadateDeviceModel;
+export default UpadateClientModel;

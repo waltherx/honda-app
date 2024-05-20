@@ -10,6 +10,7 @@ import { useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useQuery } from "react-query";
 import Loader from "./Loader";
+import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -55,7 +56,12 @@ const MapLast = ({ device_id }: Props) => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <Marker position={[position.latitude, position.longitude]}>
+          <ReactLeafletDriftMarker
+            position={{ lat: position.latitude, lng: position.longitude }}
+            duration={1000}
+
+          >
+
             <Popup>
               <div className="block rounded-lg bg-white text-center shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
                 <div className="p-3">
@@ -131,7 +137,8 @@ const MapLast = ({ device_id }: Props) => {
                 </div>
               </div>
             </Popup>
-          </Marker>
+          </ReactLeafletDriftMarker>
+
         </MapContainer>
       ) : (
         <Loader />

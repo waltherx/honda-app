@@ -18,7 +18,7 @@ export const Modal = ({ addBackground, children, onClose }: Props) => {
                 className={twMerge(
                     'fixed inset-0',
                     onClose && 'cursor-pointer',
-                    addBackground && 'bg-black opacity-50'
+                    addBackground && 'bg-base-200 opacity-50'
                 )}
                 onClick={onClose}
                 data-testid="background"

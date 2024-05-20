@@ -1,21 +1,24 @@
-"use client"
+"use client";
 import { SimpleLoading } from "@/components/SimpleLoading";
 import { MotoData } from "@/types";
 import Link from "next/link";
 import { getAllMotos } from "@/services";
 import { useQuery } from "react-query";
-import { } from "@/components/Button";
+import {} from "@/components/Button";
 import { Button } from "@/components/Button";
 import { useEffect, useState } from "react";
 import CreateMotoModal from "@/components/modals/CreateMotoModal";
 import UpdateMotoModal from "@/components/modals/UpdateMotoModal";
 
-
 export default function Page() {
-
   const [selectedMoto, setSelectedMoto] = useState<MotoData | null>(null);
   const [isCreateMotoModalShown, setIsCreateMotoModalShown] = useState(false);
-  const { data: motos, isLoading, error } = useQuery<MotoData[]>({
+
+  const {
+    data: motos,
+    isLoading,
+    error,
+  } = useQuery<MotoData[]>({
     queryKey: ["motos"],
     queryFn: getAllMotos,
   });
@@ -26,31 +29,41 @@ export default function Page() {
     }
   }, [isCreateMotoModalShown, selectedMoto]);
 
-  if (error) return <div>error al cargar datos..☠️</div>
-  if (isLoading) return <SimpleLoading />
+  if (error) return <div>error al cargar datos..☠️</div>;
+  if (isLoading) return <SimpleLoading />;
 
   return (
     <>
       <div className="text-sm breadcrumbs">
         <ul>
-          <li><Link href='/'>Inicio</Link></li>
+          <li>
+            <Link href="/">Inicio</Link>
+          </li>
           <li>Motos</li>
         </ul>
       </div>
       <div className="card bg-base-200 shadow-xl">
-        {isCreateMotoModalShown && <CreateMotoModal onClose={() => setIsCreateMotoModalShown(false)} />}
-        {selectedMoto && <UpdateMotoModal moto={selectedMoto} onClose={() => setSelectedMoto(null)} />}
+        {isCreateMotoModalShown && (
+          <CreateMotoModal onClose={() => setIsCreateMotoModalShown(false)} />
+        )}
+        {selectedMoto && (
+          <UpdateMotoModal
+            moto={selectedMoto}
+            onClose={() => setSelectedMoto(null)}
+          />
+        )}
         <div className="card-body">
           <div className="flex gap-x-8">
-            <h2 className="card-title text-center">
-              Lista de Motos
-            </h2>
-            <Button variant="primary" onClick={() => setIsCreateMotoModalShown(true)}>
+            <h2 className="card-title text-center">Lista de Motos</h2>
+            <Button
+              variant="primary"
+              onClick={() => setIsCreateMotoModalShown(true)}
+            >
               Crear
             </Button>
           </div>
           <div className="overflow-x-auto">
-            {motos ?
+            {motos ? (
               <table className="table table-zebra">
                 <thead>
                   <tr>
@@ -68,7 +81,14 @@ export default function Page() {
                       </td>
                       <td>{c.marca}</td>
                       <td>{c.modelo}</td>
-                      <td><a className="btn btn-ghost btn-xs" onClick={() => setSelectedMoto(c)}>Editar</a></td>
+                      <td>
+                        <a
+                          className="btn btn-ghost btn-xs"
+                          onClick={() => setSelectedMoto(c)}
+                        >
+                          Editar
+                        </a>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -81,12 +101,12 @@ export default function Page() {
                   </tr>
                 </tfoot>
               </table>
-              : <p>Cargando...😶‍🌫️</p>
-            }
+            ) : (
+              <p>Cargando...😶‍🌫️</p>
+            )}
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 }
-

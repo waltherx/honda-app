@@ -16,9 +16,7 @@ export default function VianLayout({
                 <div className="mb-auto px-4">
                     <div className="flex flex-col">
                         <div className="devider py-2" />
-
                         <div className="gird">
-
                             {children}
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 
 export const Input = forwardRef<HTMLInputElement, JSX.IntrinsicElements['input']>(({ ...props }, ref) => (
     <input
-        className="input input-bordered w-full p-2 rounded outline-0 placeholder:text-textGray"
+        className="input input-bordered w-full max-w-xs"
         ref={ref}
         {...props}
     />

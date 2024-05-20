@@ -1,36 +1,35 @@
 export type MotoData = {
-    id: number;
+    id: string;
     marca: string;
     modelo: string;
-    anio: number;
     placa: string;
-    motor: string;
-    color: string;
-    peso: number;
-    kilometraje: number;
+    litrokm: number;
     estado: string;
-    fecha_compra: string;
-    precio_compra: number;
-    client_id: number;
+    descripcion: string;
+    client_id: string;
+    sucrusal_id:string;
     dispositivo?: DeviceData;
+    created_at?: Date;
+    updated_at?: Date;
 };
 
 export type MotoCreate = Omit<MotoData, "id">;
 
 export type ClientData = {
     id: number;
-    ci: number;
+    ci: string;
     fullname: string;
-    address: string;
-    phone: string;
-    status: number;
+    address?: string;
+    phone?: string;
+    created_at?: Date;
+    updated_at?: Date;
 };
 
 export type ClientCreate = {
-    ci: number;
+    ci: string;
     fullname: string;
-    address: string;
-    phone: string;
+    address?: string;
+    phone?: string;
 };
 
 export type DeviceData = {
